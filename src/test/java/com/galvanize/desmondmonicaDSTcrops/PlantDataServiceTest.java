@@ -20,5 +20,4 @@ public class PlantDataServiceTest {
     void plantDataServiceHasField_myPlantDataList() {
         assertNotNull(plantDataService.myPlantDataList);
     }
-
 }
