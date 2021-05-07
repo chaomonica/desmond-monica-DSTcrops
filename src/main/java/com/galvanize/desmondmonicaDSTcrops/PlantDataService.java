@@ -1,13 +1,15 @@
 package com.galvanize.desmondmonicaDSTcrops;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PlantDataService {
     List<PlantData> myPlantDataList = new ArrayList<>();
 
-    public Object findAllPlants() {
-        return null;
+    public List<PlantData> findAllPlants() {
+
+        return myPlantDataList;
     }
 
     public PlantData addPlant(PlantData plantData){
@@ -43,5 +45,16 @@ public class PlantDataService {
             }
         }
         return null;
+    }
+
+    public List<PlantData> getPlantsBySeason(String season){
+        List<PlantData> result = new ArrayList<>();
+
+        for (PlantData plantData: this.myPlantDataList) {
+            if (Arrays.asList(plantData.seasons).contains(season)) {
+                result.add(plantData);
+            }
+        }
+        return result;
     }
 }
