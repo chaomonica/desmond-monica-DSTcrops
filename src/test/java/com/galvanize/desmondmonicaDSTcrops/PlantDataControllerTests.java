@@ -1,17 +1,22 @@
 package com.galvanize.desmondmonicaDSTcrops;
 
+import net.minidev.json.writer.JsonReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONObject;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest
@@ -27,7 +32,9 @@ public class PlantDataControllerTests {
     @BeforeEach
     void setUp() {
         plantDataList = new ArrayList<>();
-        plantDataList.add(new PlantData("Carrot Plant"));
+
+        String[] seasons = {"autumn"};
+        plantDataList.add(new PlantData("Carrot Plant", "Oblong Seed", seasons, 0 ));
     }
 
     @Test
@@ -36,5 +43,17 @@ public class PlantDataControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/plants"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("Carrot Plant"));
+    }
+
+    @Test
+    void addPlant_addsAPlant() throws Exception {
+        String[] seasons = {"autumn"};
+        when(plantDataService.addPlant(any(PlantData.class))).thenReturn(new PlantData("Carrot Plant", "Oblong Seed", seasons, 0));
+        mockMvc.perform(MockMvcRequestBuilders.post("/plants")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id\":0,\"name\":\"Carrot Plant\",\"seasons\":[\"autumn\"],\"seedName\":\"Oblong Seed\"}"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("name").value("Carrot Plant"));
+
     }
 }

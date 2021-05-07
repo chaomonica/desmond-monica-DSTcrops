@@ -9,4 +9,9 @@ public class PlantDataService {
     public Object findAllPlants() {
         return null;
     }
+
+    public PlantData addPlant(PlantData plantData){
+        myPlantDataList.add(plantData);
+        return null;
+    }
 }

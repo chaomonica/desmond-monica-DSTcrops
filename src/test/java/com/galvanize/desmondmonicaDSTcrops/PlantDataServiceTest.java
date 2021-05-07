@@ -11,7 +11,8 @@ public class PlantDataServiceTest {
     @BeforeEach
     void setUp() {
         plantDataService = new PlantDataService();
-        PlantData plant = new PlantData("Carrot Plant");
+        String[] seasons = {"autumn"};
+        PlantData plant = new PlantData("Carrot Plant", "Oblong Seed", seasons, 0);
         plantDataService.myPlantDataList.add(plant);
     }
 
