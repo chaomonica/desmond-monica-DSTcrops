@@ -71,6 +71,16 @@ public class PlantDataControllerTests {
     }
 
     @Test
+    void deletePlantById() throws Exception {
+        String[] seasons = {"spring", "summer" };
+        PlantData actual = new PlantData("Deleted", "Oblong Seed", seasons, 1);
+        when(plantDataService.deleteById(anyInt())).thenReturn(actual);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/plants/1"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("name").value("Deleted"));
+    }
+    @Test
     void updatePlantById() throws Exception {
         String[] seasons = {"spring", "summer"};
         PlantData actual = new PlantData("Update By Id Plant", "Oblong Seed", seasons, 1);
@@ -81,5 +91,6 @@ public class PlantDataControllerTests {
                 .content("{\"id\":1,\"name\":\"Has Been Updated!\",\"seasons\":[\"spring, summer\"],\"seedName\":\"Oblong Seed\"}"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("name").value("Has Been Updated!"));
+
     }
 }

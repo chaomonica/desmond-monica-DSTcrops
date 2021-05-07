@@ -26,8 +26,15 @@ public class PlantDataController {
         return plantDataService.getById(plantId);
     }
 
+
+    @DeleteMapping("/plants/{plantId}")
+    public PlantData deletePlantById(@PathVariable int plantId) {
+        return plantDataService.deleteById(plantId);
+    }
+
     @PutMapping("/plants/{plantId}")
     public PlantData updatePlantById(@PathVariable int plantId, @RequestBody PlantData plantData){
         return plantDataService.updateById(plantId, plantData);
+
     }
 }

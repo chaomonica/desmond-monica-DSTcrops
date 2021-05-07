@@ -22,6 +22,18 @@ public class PlantDataService {
         return null;
     }
 
+
+    public PlantData deleteById(int id) {
+        for (int i = 0; i < this.myPlantDataList.size(); i += 1) {
+            if (this.myPlantDataList.get(i).id == id) {
+                PlantData plantData = this.myPlantDataList.get(i);
+                this.myPlantDataList.remove(i);
+                return plantData;
+            }
+        }
+        return null;
+    }
+
     public PlantData updateById(int id, PlantData updatedPlantData) {
         for (PlantData plantData: this.myPlantDataList) {
             if (plantData.getId() == id) {
