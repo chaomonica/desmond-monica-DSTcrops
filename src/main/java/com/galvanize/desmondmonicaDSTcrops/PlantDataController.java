@@ -20,4 +20,9 @@ public class PlantDataController {
 
         return plantDataService.addPlant(plantData);
     }
+
+    @GetMapping("/plants/{plantId}")
+    public PlantData getPlantById(@PathVariable int plantId) {
+        return plantDataService.getById(plantId);
+    }
 }

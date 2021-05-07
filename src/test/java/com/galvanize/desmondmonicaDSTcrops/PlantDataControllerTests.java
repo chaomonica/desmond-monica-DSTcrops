@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 
@@ -17,6 +18,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest
@@ -55,5 +57,16 @@ public class PlantDataControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("name").value("Carrot Plant"));
 
+    }
+
+    @Test
+    void getPlantById() throws Exception {
+        String[] seasons = {"spring", "summer"};
+        PlantData actual = new PlantData("Got By Id Plant", "Oblong Seed", seasons, 1);
+        when(plantDataService.getById(anyInt())).thenReturn(actual);
+        mockMvc.perform(MockMvcRequestBuilders.get("/plants/1"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("name").value("Got By Id Plant"));
     }
 }

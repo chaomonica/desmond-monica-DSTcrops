@@ -14,4 +14,11 @@ public class PlantDataService {
         myPlantDataList.add(plantData);
         return null;
     }
+
+    public PlantData getById(int id) {
+        for (PlantData plantData: this.myPlantDataList) {
+            if (plantData.getId() == id) return plantData;
+        }
+        return null;
+    }
 }
