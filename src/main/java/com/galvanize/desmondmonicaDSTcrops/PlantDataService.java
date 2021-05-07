@@ -1,9 +1,12 @@
 package com.galvanize.desmondmonicaDSTcrops;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Component
 public class PlantDataService {
     List<PlantData> myPlantDataList = new ArrayList<>();
 
