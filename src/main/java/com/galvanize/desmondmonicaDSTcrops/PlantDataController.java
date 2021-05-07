@@ -25,4 +25,9 @@ public class PlantDataController {
     public PlantData getPlantById(@PathVariable int plantId) {
         return plantDataService.getById(plantId);
     }
+
+    @PutMapping("/plants/{plantId}")
+    public PlantData updatePlantById(@PathVariable int plantId, @RequestBody PlantData plantData){
+        return plantDataService.updateById(plantId, plantData);
+    }
 }

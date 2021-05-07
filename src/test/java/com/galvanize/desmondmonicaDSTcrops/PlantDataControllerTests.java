@@ -69,4 +69,17 @@ public class PlantDataControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("name").value("Got By Id Plant"));
     }
+
+    @Test
+    void updatePlantById() throws Exception {
+        String[] seasons = {"spring", "summer"};
+        PlantData actual = new PlantData("Update By Id Plant", "Oblong Seed", seasons, 1);
+        when(plantDataService.updateById(anyInt(), any(PlantData.class))).thenReturn(new PlantData("Has Been Updated!", "Oblong Seed", seasons, 1));
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/plants/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id\":1,\"name\":\"Has Been Updated!\",\"seasons\":[\"spring, summer\"],\"seedName\":\"Oblong Seed\"}"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("name").value("Has Been Updated!"));
+    }
 }
