@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONObject;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest
@@ -44,7 +44,7 @@ public class PlantDataControllerTests {
         when(plantDataService.findAllPlants()).thenReturn(plantDataList);
         mockMvc.perform(MockMvcRequestBuilders.get("/plants"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("Carrot Plant"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(1)));
     }
 
     @Test
@@ -92,5 +92,21 @@ public class PlantDataControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("name").value("Has Been Updated!"));
 
+    }
+
+    @Test
+    void getPlantsBySeason() throws Exception {
+        String[] seasons = {"spring", "summer"};
+        PlantData summerPlant1 = new PlantData("summerPlant1", "Oblong Seed", seasons, 1);
+        PlantData summerPlant2 = new PlantData("summerPlant2", "Oblong Seed", seasons, 2);
+
+        List<PlantData> summerPlants = new ArrayList<>();
+        summerPlants.add(summerPlant1);
+        summerPlants.add(summerPlant2);
+
+        when(plantDataService.getPlantsBySeason(anyString())).thenReturn(summerPlants);
+        mockMvc.perform(MockMvcRequestBuilders.get("/plants/findBySeason?season=summer"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)));
     }
 }

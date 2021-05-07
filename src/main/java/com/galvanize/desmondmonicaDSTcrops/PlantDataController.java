@@ -2,6 +2,8 @@ package com.galvanize.desmondmonicaDSTcrops;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class PlantDataController {
     PlantDataService plantDataService;
@@ -11,8 +13,8 @@ public class PlantDataController {
     }
 
     @GetMapping("/plants")
-    public String returnPlants() {
-        return "Carrot Plant";
+    public List<PlantData> returnPlants() {
+        return plantDataService.findAllPlants();
     }
 
     @PostMapping("/plants")
@@ -36,5 +38,10 @@ public class PlantDataController {
     public PlantData updatePlantById(@PathVariable int plantId, @RequestBody PlantData plantData){
         return plantDataService.updateById(plantId, plantData);
 
+    }
+
+    @GetMapping("/plants/findBySeason")
+    public List<PlantData> returnPlantsBySeason(@RequestParam String season) {
+        return plantDataService.getPlantsBySeason(season);
     }
 }
