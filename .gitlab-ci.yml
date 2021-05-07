@@ -2,11 +2,11 @@
 image: adoptopenjdk:11
 
 stages:
-  - build
+  - extremelyawesomebuild
   - test
 
 build:
-  stage: build
+  stage: extremelyawesomebuild
   script: ./gradlew --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
